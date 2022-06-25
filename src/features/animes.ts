@@ -11,12 +11,20 @@ export const getAnimeByName = createAsyncThunk('anime/getAnimeByName', async (na
   return data;
 })
 
+export interface AnimeDTO {
+  anime_id: number;
+  anime_name: string;
+  anime_img: string;
+}
+
 export interface AnimeState{
   status: 'idle' | 'loading' | 'error';
+  list: AnimeDTO[];
 }
 
 const initialState: AnimeState = {
-  status: 'idle'
+  status: 'idle',
+  list: []
 }
 
 export const animeSlice = createSlice({
@@ -30,14 +38,14 @@ export const animeSlice = createSlice({
       state.status = 'loading';
     }).addCase(getAnimes.fulfilled, (state,action) => {
       state.status = 'idle';
-      console.log(action);
+      state.list = action.payload.data 
     }).addCase(getAnimes.rejected, (state) => {
       state.status = 'error';
     }).addCase(getAnimeByName.pending, (state) => {
       state.status = 'loading';
     }).addCase(getAnimeByName.fulfilled, (state,action) => {
       state.status = 'idle';
-      console.log(action);
+      console.log(action.payload);
     }).addCase(getAnimeByName.rejected, (state) => {
       state.status = 'error';
     })
