@@ -1,6 +1,15 @@
-import { Collapse, Skeleton, Typography } from "@mui/material";
+import {
+  Collapse,
+  Skeleton,
+  TextField,
+  Typography,
+  Box,
+  Grow,
+  Slide,
+  Fade,
+} from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../app/store";
 import Card from "../../components/Card";
@@ -35,30 +44,45 @@ const Home = () => {
   const redirectToAnimePage = (id: string) => {
     navigate(`/anime/${id}`);
   };
+
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
       <Typography variant="h3">Animes</Typography>
       <Typography variant="body2" color="textSecondary">
         e seus fatos curiosos
       </Typography>
+      <Box my={2}>
+        <TextField
+          label="Procurar"
+          placeholder="Digite um termo para busca"
+          variant="outlined"
+          onChange={({ target: { value } }) => setSearchTerm(value)}
+          fullWidth
+        />
+      </Box>
       <TransitionGroup className={classes.animesListStyle}>
         {loadingSkeletons.map(() => (
-          <Collapse>
+          <Grow>
             <Skeleton height="300px" variant="rectangular" />
-          </Collapse>
+          </Grow>
         ))}
       </TransitionGroup>
 
       <TransitionGroup className={classes.animesListStyle}>
-        {animesList.map(({ anime_img, anime_name, anime_id }) => (
-          <Collapse key={anime_id}>
-            <Card
-              onClick={() => redirectToAnimePage(anime_name)}
-              image={anime_img}
-              title={anime_name}
-            />
-          </Collapse>
-        ))}
+        {animesList
+          .filter(({ anime_name }) =>
+            searchTerm ? anime_name.includes(searchTerm) : true
+          )
+          .map(({ anime_img, anime_name, anime_id }, i) => (
+            <Collapse>
+              <Card
+                onClick={() => redirectToAnimePage(anime_name)}
+                image={anime_img}
+                title={anime_name}
+              />
+            </Collapse>
+          ))}
       </TransitionGroup>
     </>
   );
