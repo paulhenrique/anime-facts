@@ -17,9 +17,15 @@ export interface AnimeDTO {
   anime_img: string;
 }
 
+export interface AnimeFactDTO {
+  fact_id: number;
+  fact: string;
+}
+
 export interface AnimeState{
   status: 'idle' | 'loading' | 'error';
   list: AnimeDTO[];
+  selectedAnime?: AnimeFactDTO[];
 }
 
 const initialState: AnimeState = {
@@ -45,7 +51,7 @@ export const animeSlice = createSlice({
       state.status = 'loading';
     }).addCase(getAnimeByName.fulfilled, (state,action) => {
       state.status = 'idle';
-      console.log(action.payload);
+      state.selectedAnime = action.payload.data;
     }).addCase(getAnimeByName.rejected, (state) => {
       state.status = 'error';
     })

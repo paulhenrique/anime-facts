@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../../app/store";
 import Card from "../../components/Card";
 import { getAnimes } from "../../features/animes";
 import { TransitionGroup } from "react-transition-group";
+import { useNavigate } from "react-router-dom";
 
 const useMakeStyles = makeStyles({
   animesListStyle: {
@@ -29,6 +30,11 @@ const Home = () => {
     animeStatus === "loading"
       ? Array.from({ length: 10 }, (e) => e)
       : Array.from({ length: 0 }, (e) => e);
+
+  const navigate = useNavigate();
+  const redirectToAnimePage = (id: string) => {
+    navigate(`/anime/${id}`);
+  };
   return (
     <>
       <Typography variant="h3">Animes</Typography>
@@ -44,9 +50,13 @@ const Home = () => {
       </TransitionGroup>
 
       <TransitionGroup className={classes.animesListStyle}>
-        {animesList.map(({ anime_img, anime_name }) => (
-          <Collapse>
-            <Card image={anime_img} title={anime_name} />
+        {animesList.map(({ anime_img, anime_name, anime_id }) => (
+          <Collapse key={anime_id}>
+            <Card
+              onClick={() => redirectToAnimePage(anime_name)}
+              image={anime_img}
+              title={anime_name}
+            />
           </Collapse>
         ))}
       </TransitionGroup>
