@@ -14,11 +14,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Paper sx={{ p: "1rem" }}>
-        <Container>
-          <App />
-        </Container>
-      </Paper>
+      <Container sx={{ p: "1rem" }}>
+        <App />
+      </Container>
     </ThemeProvider>
   </React.StrictMode>
 );
