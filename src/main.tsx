@@ -1,12 +1,24 @@
-import { Container } from "@mui/material";
+import { Container, CssBaseline, Paper } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app";
+import { createTheme, ThemeProvider } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Container>
-      <App />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Paper sx={{ p: "1rem" }}>
+        <Container>
+          <App />
+        </Container>
+      </Paper>
+    </ThemeProvider>
   </React.StrictMode>
 );
