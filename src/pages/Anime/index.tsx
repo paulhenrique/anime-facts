@@ -2,6 +2,7 @@ import {
   Box,
   Card,
   CardContent,
+  CircularProgress,
   Grid,
   IconButton,
   List,
@@ -23,6 +24,7 @@ const Anime = () => {
   const selectedAnime = useSelector(
     (state: RootState) => state.anime.selectedAnime
   );
+  const animeStatus = useSelector((state: RootState) => state.anime.status);
   const navigate = useNavigate();
 
   if (!params.id)
@@ -36,6 +38,18 @@ const Anime = () => {
   const handleGoBack = () => {
     navigate("/");
   };
+  if (animeStatus === "loading")
+    return (
+      <Box
+        width="100%"
+        height="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CircularProgress />
+      </Box>
+    );
   return (
     <div>
       <Grid container spacing={2}>
