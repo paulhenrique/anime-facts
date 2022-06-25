@@ -7,9 +7,11 @@ import { getAnimes } from "../../features/animes";
 const Home = () => {
   const animeStatus = useSelector((state: RootState) => state.anime.status);
   const dispatch = useDispatch<AppDispatch>();
+
   useEffect(() => {
     dispatch(getAnimes());
   }, []);
+
   return <Typography>{animeStatus}</Typography>;
 };
 
