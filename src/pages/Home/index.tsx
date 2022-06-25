@@ -1,11 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  Collapse,
-  Grid,
-  Skeleton,
-  Typography,
-} from "@mui/material";
+import { Collapse, Skeleton, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +31,10 @@ const Home = () => {
       : Array.from({ length: 0 }, (e) => e);
   return (
     <>
+      <Typography variant="h3">Animes</Typography>
+      <Typography variant="body2" color="textSecondary">
+        e seus fatos curiosos
+      </Typography>
       <TransitionGroup className={classes.animesListStyle}>
         {loadingSkeletons.map(() => (
           <Collapse>
